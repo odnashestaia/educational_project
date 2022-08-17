@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% block title %}<title>Доб образование</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-secondary fixed-top  p-3">
+    <a class="navbar-brand" href="#">Доб Образование</a>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        {% block sidebar %}
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-link"><a href="{% url 'catalog' %}" class="nav-link">Каталог</a></li>
+            <li class="nav-link"><a href="{% url 'cart' %}" class="nav-link">Корзина</a></li>
+            <li class="nav-link"><a href="{% url 'orders' %}" class="nav-link">Мои курсы</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Выйти ({{ user.username }})</a></li>
+            {% else %}
+            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Войти</a></li>
+            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Регистрация</a></li>
+            {% endif %}
+        </ul>
+        {% endblock %}
+    </div>
+</nav>
+<main role="main" class="container" style="margin-top: 100px; margin-bottom: 200px">
+    <div class="starter-template ">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+<footer class="bg-secondary text-white fixed-bottom">
+    <div class="d-flex justify-content-evenly">
+        <div>
+            <p>Социальные сети</p>
+            <div class="d-flex justify-content-evenly">
+                <a href="#"><img src="files/facebook.ico" alt=""></a>
+                <a href="#"><img src="files/youtube.ico" alt=""></a>
+                <a href="#"><img src="files/vk.ico" alt=""></a>
+            </div>
+        </div>
+        <div>
+            <p>Контакты</p>
+            <p>Студенческая 1</p>
+            <p>8991-666-69-34</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

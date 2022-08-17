@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Мои Курсы</h1>
+    {% if orders_list %}
+        <ol>
+            {% for orders in orders_list %}
+                <li>
+                    {{ orders.date }} ({{ orders.status_verbose }})
+                    {% if orders.role == 'new' %}
+                        <a href="{% url 'delete_order' orders.pk %}">Удалить Заказ</a>
+                    {% endif %}
+                    {% if orders.goods_set.all %}
+                        <ul>
+                            {% for item in orders.goods_set.all %}
+                                <li>{{ item.product.name }} | Количество: {{ item.count }} |
+                                    Стоимость: {{ item.price }} </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p>У вас пока нет курсов</p>
+    {% endif %}
+{% endblock %}

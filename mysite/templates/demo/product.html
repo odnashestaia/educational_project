@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="d-flex" >
+        <div class=""><img src="{{ products.photo_file.url }}" alt="" width="700" height="400"></div>
+        <div class="p-2">
+            <h1>{{ products.name }}</h1>
+            <h2> Цена: {{ products.price }}</h2>
+            {% if user.is_authenticated %}
+                    <a href="#" onclick="toCart(this,{{products.pk}})">В корзину</a>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        toCart = async (target, pk) => {
+            const res = await fetch(`/to_cart/${pk}`).then(res => res.json());
+            const message = document.createElement('div');
+            if (res.count) {
+                message.innerHTML = `Товар добавлен в корзину. Общее колчество товаров в корзине: ${res.count}`;
+            } else {
+                message.innerHTML = 'Больше нельзя добавить';
+            }
+            target.parentElement.append(message);
+            setTimeout(() => message.remove(), 1000);
+
+        }
+    </script>
+{% endblock %}
